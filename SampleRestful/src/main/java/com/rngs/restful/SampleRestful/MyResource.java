@@ -37,7 +37,7 @@ public class MyResource {
     @Path("/appjson")
     public List<Person> getItJSon()throws JsonProcessingException {
         return ps.getAllPeresons();
-    }
+    } 
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)

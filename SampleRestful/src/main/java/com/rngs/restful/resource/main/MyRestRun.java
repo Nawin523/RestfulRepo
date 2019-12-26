@@ -31,7 +31,7 @@ public class MyRestRun {
 		String responseJson = target.path("myresource").path("appjson").request()
 				.accept(MediaType.APPLICATION_JSON).get(String.class).toString();
 		
-		System.out.println(response);
+		System.out.println(response); 
 		System.out.println(responseXml);
 		System.out.println(responseJson);
 		
