@@ -9,10 +9,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.rngs.restful.resource.model.GenericResponse;
 import com.rngs.restful.resource.model.Person;
 import com.rngs.restful.resource.service.PersonService;
 
@@ -22,14 +25,23 @@ public class Restfacad {
 	PersonService ps = new PersonService();
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/getAllPersons")
-	public String getAllPersons() throws JsonProcessingException {
-		List<Person> persons = ps.getAllPeresons();
-		//Gson json = new Gson(); 
-		ObjectMapper objm = new ObjectMapper();
+	public Response getAllPersons() throws JsonProcessingException {
 		
-		return objm.writeValueAsString(persons);
+		List<Person> persons = ps.getAllPeresons();
+		GenericResponse gr = new GenericResponse();
+		ObjectMapper objm = new ObjectMapper();
+		if(null == persons) {
+			gr.setStatus("404");
+			gr.setMessage("App dont contains the users");
+		objm.writeValueAsString(gr);
+		return Response.status(404).entity(objm).build();
+		}
+		gr.setStatus("200");
+		gr.setMessage("List of uses in the application is :");
+		objm.writeValueAsString(gr);
+		objm.writeValueAsString(persons);
+		return Response.status(200).entity(objm).build();
 	}
 	
 	@POST

@@ -1,6 +1,5 @@
 package com.rngs.restful.SampleRestful;
  
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -8,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rngs.restful.resource.model.Person;
 import com.rngs.restful.resource.service.PersonService;
 
@@ -29,6 +29,13 @@ public class MyResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     public List<Person> getIt() {
+        return ps.getAllPeresons();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/appjson")
+    public List<Person> getItJSon()throws JsonProcessingException {
         return ps.getAllPeresons();
     }
     
